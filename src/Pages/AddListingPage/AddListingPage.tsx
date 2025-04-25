@@ -257,7 +257,7 @@ const AddListingPage = (props: Props) => {
       <form className="form" onSubmit={handleSubmit(handleCreateListing)}>
         <div>
           <h2 className="car-detail">Car Details:</h2>
-          <div className="grid">
+          <div className="addListing-grid">
             <div>
               <label className="addListing-label" htmlFor="text">
                 <FaClipboard />
@@ -274,22 +274,18 @@ const AddListingPage = (props: Props) => {
             </div>
             <div>
               <label className="addListing-label" htmlFor="text">
-                <IoColorPaletteOutline />
-                Color
+                <FaCar />
+                Brand
               </label>
-              <select
-                id="color"
-                className="custom-select"
-                {...register("color")}
-              >
-                <option value="">Select Color</option>
-                {colorOptions.map((color, idx) => (
-                  <option key={idx} value={color}>
-                    {color}
+              <select className="custom-select" {...register("brand")}>
+                <option value={""}>Select Brand</option>
+                {Object.keys(carOptions).map((brand) => (
+                  <option value={brand} key={brand}>
+                    {brand}
                   </option>
                 ))}
               </select>
-              {errors.color && <p className="error">{errors.color.message}</p>}
+              {errors.brand && <p className="error">{errors.brand.message}</p>}
             </div>
             <div>
               <label className="addListing-label" htmlFor="text">
@@ -343,36 +339,6 @@ const AddListingPage = (props: Props) => {
               />
               {errors.year && <p className="error">{errors.year.message}</p>}
             </div>
-            <div>
-              <label className="addListing-label" htmlFor="text">
-                <FaCar />
-                Brand
-              </label>
-              <select className="custom-select" {...register("brand")}>
-                <option value={""}>Select Brand</option>
-                {Object.keys(carOptions).map((brand) => (
-                  <option value={brand} key={brand}>
-                    {brand}
-                  </option>
-                ))}
-              </select>
-              {errors.brand && <p className="error">{errors.brand.message}</p>}
-            </div>
-            <div>
-              <label className="addListing-label" htmlFor="text">
-                <IoMdPricetag />
-                Price
-              </label>
-              <input
-                className="Listing-input"
-                type="number"
-                min="0"
-                id="price"
-                placeholder="Price"
-                {...register("price")}
-              />
-              {errors.price && <p className="error">{errors.price.message}</p>}
-            </div>
             <div className="fuel">
               <label className="addListing-label" htmlFor="text">
                 <BsFillFuelPumpFill />
@@ -396,21 +362,18 @@ const AddListingPage = (props: Props) => {
             </div>
             <div>
               <label className="addListing-label" htmlFor="text">
-                <SlSpeedometer />
-                Horse Power
+                <IoMdPricetag />
+                Price
               </label>
               <input
                 className="Listing-input"
                 type="number"
                 min="0"
-                max="1000"
-                id="horsePower"
-                placeholder="Horse Power"
-                {...register("horsePower")}
+                id="price"
+                placeholder="Price"
+                {...register("price")}
               />
-              {errors.horsePower && (
-                <p className="error">{errors.horsePower.message}</p>
-              )}
+              {errors.price && <p className="error">{errors.price.message}</p>}
             </div>
             <div>
               <label className="addListing-label" htmlFor="text">
@@ -432,6 +395,43 @@ const AddListingPage = (props: Props) => {
               {errors.gearBox && (
                 <p className="error">{errors.gearBox.message}</p>
               )}
+            </div>
+            <div>
+              <label className="addListing-label" htmlFor="text">
+                <SlSpeedometer />
+                Horse Power
+              </label>
+              <input
+                className="Listing-input"
+                type="number"
+                min="0"
+                max="1000"
+                id="horsePower"
+                placeholder="Horse Power"
+                {...register("horsePower")}
+              />
+              {errors.horsePower && (
+                <p className="error">{errors.horsePower.message}</p>
+              )}
+            </div>
+            <div>
+              <label className="addListing-label" htmlFor="text">
+                <IoColorPaletteOutline />
+                Color
+              </label>
+              <select
+                id="color"
+                className="custom-select"
+                {...register("color")}
+              >
+                <option value="">Select Color</option>
+                {colorOptions.map((color, idx) => (
+                  <option key={idx} value={color}>
+                    {color}
+                  </option>
+                ))}
+              </select>
+              {errors.color && <p className="error">{errors.color.message}</p>}
             </div>
             <div>
               <label className="addListing-label" htmlFor="text">
