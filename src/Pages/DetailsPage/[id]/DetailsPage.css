@@ -1,12 +1,12 @@
-.header {
+.details-header {
   padding: 40px;
   padding-left: 0;
   padding-right: 0;
 }
 
 @media (min-width: 768px) {
-  .header {
-    padding-left: 40px; /* 10 * 0.25rem = 2.5rem */
+  .details-header {
+    padding-left: 40px;
     padding-right: 40px;
   }
 }
@@ -17,7 +17,7 @@
   line-height: 30px;
 }
 
-.a-container {
+.details-container {
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
   margin-top: 40px;
@@ -25,17 +25,17 @@
 }
 
 @media (min-width: 768px) {
-  .a-container {
+  .details-container {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-.b-container {
-  grid-column: span 1 / span 1; /* default */
+.image-container {
+  grid-column: span 1 / span 1;
 }
 
 @media (min-width: 768px) {
-  .b-container {
+  .image-container {
     grid-column: span 2 / span 2;
   }
 }

@@ -30,10 +30,10 @@ const DetailsPage = (props: Props) => {
   }, []);
 
   return (
-    <div className="header">
+    <div className="details-header">
       <h2 className="title">{listing?.title}</h2>
-      <div className="a-container">
-        <div className="b-container">
+      <div className="details-container">
+        <div className="image-container">
           <>
             <ImageGallery images={listing?.images} />
           </>
@@ -41,6 +41,7 @@ const DetailsPage = (props: Props) => {
             <h2 className="description-header">Description</h2>
             <p>{listing?.description}</p>
           </div>
+          <OwnersDetails listing={listing} />
         </div>
         <div className="c-container">
           <div className="price-container">
@@ -51,7 +52,6 @@ const DetailsPage = (props: Props) => {
             </div>
           </div>
           <CarSpecification listing={listing} />
-          <OwnersDetails listing={listing} />
         </div>
       </div>
     </div>
