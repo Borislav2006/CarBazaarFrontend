@@ -1,0 +1,26 @@
+.specification-container {
+  padding: 40px;
+  border-radius: 12px;
+  border-width: 1px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  margin-top: 28px;
+}
+
+.specification-item {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.specification {
+  display: flex;
+  gap: 8px;
+}
+
+.specification-header {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 24px;
+}
