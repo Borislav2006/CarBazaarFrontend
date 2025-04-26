@@ -16,16 +16,16 @@ type Props = {
   gearBox: string;
   fuelType: string;
   year: number;
+  title: string;
 };
 
-const CarItem = ({ imagePath, price, gearBox, fuelType, year, id }: Props) => {
+const CarItem = ({ imagePath, price, gearBox, fuelType, year, id, title }: Props) => {
   const imageUrl = `https://localhost:5001/images/${imagePath}`;
-  console.log(imageUrl);
   return (
     <div className="card">
       <img className="image" src={imageUrl} />
       <div>
-        <h2 className="brand"></h2>
+        <h2 className="brand">{title}</h2>
         <hr className="brand-divider"></hr>
         <div className="icons">
           <div className="icon">
@@ -50,7 +50,7 @@ const CarItem = ({ imagePath, price, gearBox, fuelType, year, id }: Props) => {
           </div>
           <hr className="divider"></hr>
           <div className="more-info">
-            <Link to={`/details-page/${id}`}>
+            <Link to={`/details-page/${id}`} className="link-details">
               <h2 className="details">
                 View Details
                 <IoOpenOutline />
