@@ -23,6 +23,8 @@ export interface Listing {
   horsePower: number;
   gearBox: string;
   color: string;
+  createdAt: string;
+  updatedAt: string;
   images: ListingImage[];
   user: UserSummary;
 }

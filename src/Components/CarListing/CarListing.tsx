@@ -41,6 +41,8 @@ const CarListing = (props: Props) => {
           fuelType={listing.engineType}
           year={listing.year}
           title={listing.title}
+          createdAt={listing.createdAt}
+          // updatedAt={listing.updatedAt}
         />
       ))}
     </div>

@@ -6,17 +6,23 @@ import CarListing from "../CarListing/CarListing";
 import CarItem from "../CarListing/CarItem";
 import { FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 type Props = {};
 
 const MyListings = (props: Props) => {
   const [userListings, setUserListings] = useState<Listing[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedListingId, setSelectedListingId] = useState<number | null>(
+    null
+  );
 
   const handleDeleteListing = async (id: number) => {
     try {
       await deleteListing(id);
       const data = await getUserListings();
       setUserListings(data);
+      toast.success("Listing deleted successfully!");
     } catch (err) {
       console.error("Failed to delete user listings", err);
     }
@@ -48,20 +54,53 @@ const MyListings = (props: Props) => {
             fuelType={listing.engineType}
             year={listing.year}
             title={listing.title}
+            createdAt={listing.createdAt}
           />
           <div className="buttons">
-            <Link to={`/add-listing?mode=edit&id=${listing.id}`} className="edit-link">
+            <Link
+              to={`/add-listing?mode=edit&id=${listing.id}`}
+              className="edit-link"
+            >
               <button className="edit-button">Edit</button>
             </Link>
             <button
               className="delete-button"
-              onClick={() => handleDeleteListing(listing.id)}
+              onClick={() => {
+                setIsModalOpen(true);
+                setSelectedListingId(listing.id);
+              }}
             >
               <FaTrash />
             </button>
           </div>
         </div>
       ))}
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Are you sure you want to delete?</h2>
+            <div className="modal-buttons">
+              <button
+                onClick={() => {
+                  if (selectedListingId !== null) {
+                    handleDeleteListing(selectedListingId);
+                    setIsModalOpen(false);
+                  }
+                }}
+                className="btn-confirm"
+              >
+                Yes, Delete
+              </button>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="btn-cancel"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

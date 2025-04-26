@@ -164,6 +164,21 @@ const carOptions = {
 
 const gearboxOptions = ["Manual", "Automatic"];
 const fuelTypeOptions = ["Petrol", "Diesel", "Electric", "Hybrid", "Gas"];
+const engineTypeOptions = [
+  "Inline-4",
+  "Inline-6",
+  "V6",
+  "V8",
+  "V10",
+  "V12",
+  "Boxer (Flat-4 / Flat-6)",
+  "Rotary (Wankel)",
+  "Electric Motor",
+  "Hybrid Engine",
+  "Turbocharged",
+  "Supercharged",
+];
+
 
 const colorOptions = [
   "Black",
@@ -377,17 +392,17 @@ const AddListingPage = (props: Props) => {
             <div className="fuel">
               <label className="addListing-label" htmlFor="text">
                 <BsFillFuelPumpFill />
-                Fuel Type
+                Engine Type
               </label>
               <select
                 className="custom-select"
                 id="fueltype"
                 {...register("engineType")}
               >
-                <option value="">Select Fuel Type</option>
-                {fuelTypeOptions.map((fuel, idx) => (
-                  <option key={idx} value={fuel}>
-                    {fuel}
+                <option value="">Select Engine Type</option>
+                {engineTypeOptions.map((engine, idx) => (
+                  <option key={idx} value={engine}>
+                    {engine}
                   </option>
                 ))}
               </select>

@@ -8,6 +8,7 @@ import { FaEuroSign } from "react-icons/fa";
 import "./CarItem.css";
 import { Link } from "react-router-dom";
 import MyListings from "../MyListings/MyListings";
+import { formatDate } from "../../Helpers/DateFormater";
 
 type Props = {
   id: number;
@@ -17,12 +18,14 @@ type Props = {
   fuelType: string;
   year: number;
   title: string;
+  createdAt: string;
 };
 
-const CarItem = ({ imagePath, price, gearBox, fuelType, year, id, title }: Props) => {
+const CarItem = ({ imagePath, price, gearBox, fuelType, year, id, title, createdAt }: Props) => {
   const imageUrl = `https://localhost:5001/images/${imagePath}`;
   return (
     <div className="card">
+      {/* <h2>Published: {formatDate(createdAt)}</h2> */}
       <img className="image" src={imageUrl} />
       <div>
         <h2 className="brand">{title}</h2>
