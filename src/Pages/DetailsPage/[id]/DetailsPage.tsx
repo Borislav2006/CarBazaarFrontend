@@ -13,8 +13,6 @@ type Props = {};
 const DetailsPage = (props: Props) => {
   const [listing, setListing] = useState<Listing>();
   const { id } = useParams();
-  console.log("Details Page", id);
-  console.log("listing", listing);
 
   useEffect(() => {
     const fetchListings = async () => {
