@@ -11,6 +11,11 @@
   width: 100%;
   border-style: solid;
   border-width: 2px;
+  text-decoration: none;
+}
+
+.edit-link {
+  width: 100%;
 }
 
 .delete-button {

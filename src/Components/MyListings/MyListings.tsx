@@ -5,6 +5,7 @@ import { Listing } from "../../types/Listings";
 import CarListing from "../CarListing/CarListing";
 import CarItem from "../CarListing/CarItem";
 import { FaTrash } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 type Props = {};
 
@@ -46,9 +47,12 @@ const MyListings = (props: Props) => {
             gearBox={listing.gearBox}
             fuelType={listing.engineType}
             year={listing.year}
+            title={listing.title}
           />
           <div className="buttons">
-            <button className="edit-button">Edit</button>
+            <Link to={`/add-listing?mode=edit&id=${listing.id}`} className="edit-link">
+              <button className="edit-button">Edit</button>
+            </Link>
             <button
               className="delete-button"
               onClick={() => handleDeleteListing(listing.id)}
