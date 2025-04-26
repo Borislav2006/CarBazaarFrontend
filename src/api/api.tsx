@@ -46,9 +46,13 @@ export const createListing = async (formData: FormData): Promise<Listing> => {
 
 export const updateListing = async (
   id: string,
-  listing: Partial<CreateListing>
+  formData: FormData
 ): Promise<void> => {
-  await axios.put(`${API_URL}/${id}`, listing);
+  await axios.put(`${API_URL}/${id}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 
 export const deleteListing = async (id: number): Promise<void> => {
