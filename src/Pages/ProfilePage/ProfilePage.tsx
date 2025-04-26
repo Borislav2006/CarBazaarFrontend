@@ -12,7 +12,7 @@ const ProfilePage = (props: Props) => {
     <div>
       <div className='wrapper'>
         <div className='header'>
-          <h2 className='text'>My listing</h2>
+          <h2 className='text'>My listings</h2>
           <Link to="/add-listing" className="nav-link">
               + Add New Listing
             </Link>
