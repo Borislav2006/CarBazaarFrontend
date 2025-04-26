@@ -40,6 +40,7 @@ const CarListing = (props: Props) => {
           gearBox={listing.gearBox}
           fuelType={listing.engineType}
           year={listing.year}
+          title={listing.title}
         />
       ))}
     </div>
