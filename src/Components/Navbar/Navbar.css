@@ -83,3 +83,10 @@
   background-color: #16a34a;
   color: white;
 }
+
+.navbar-buttons {
+  display: flex;
+  gap: 1.5rem; /* space between the buttons */
+  align-items: center;
+  text-decoration: none;
+}

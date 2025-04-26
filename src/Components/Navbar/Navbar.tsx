@@ -17,6 +17,23 @@ const Navbar = () => {
             <p className="brand-text">CarBazaar</p>
           </Link>
         </div>
+        <div className="navbar-buttons">
+          <Link className="brand-link" to="/">
+            Home
+          </Link>
+          {isLoggedIn() ? (
+            <>
+              <Link className="brand-link" to="/profile">
+                My Listings
+              </Link>
+              <Link className="brand-link" to="/add-listing">
+                Create Listing
+              </Link>
+            </>
+          ) : (
+            " "
+          )}
+        </div>
         {isLoggedIn() ? (
           <div className="navbar-right">
             <Link className="brand-link" to="/profile">
