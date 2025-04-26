@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./AddListingPage.css";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { CreateListing } from "../../types/Listings";
-import { createListing } from "../../api/api";
+import { CreateListing, Listing } from "../../types/Listings";
+import { createListing, getListingById, updateListing } from "../../api/api";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { IoMdPricetag } from "react-icons/io";
 import { BsFillFuelPumpFill } from "react-icons/bs";
@@ -18,6 +18,7 @@ import { TbManualGearbox } from "react-icons/tb";
 import { FaCar } from "react-icons/fa";
 import { FaCarSide } from "react-icons/fa";
 import { BiSolidTachometer } from "react-icons/bi";
+import UploadImages from "./Components/UploadImages";
 
 type Props = {};
 
@@ -33,7 +34,7 @@ type ListingFormInput = {
   horsePower: number;
   gearBox: string;
   color: string;
-  imageFiles: FileList;
+  imageFiles: File[];
 };
 
 const carOptions = {
@@ -198,28 +199,33 @@ const validation = Yup.object().shape({
     .required("Horse Power is required"),
   gearBox: Yup.string().required("GearBox is required"),
   color: Yup.string().required("Color is required"),
-  imageFiles: Yup.mixed<FileList>()
-    .test("required", "At least one image is required", (value) => {
-      return value && value.length > 0;
-    })
-    .required("Image is required"),
+  imageFiles: Yup.array()
+    .min(1, "You must upload at least one image")
+    .required("Images are required"),
 });
 
 const AddListingPage = (props: Props) => {
+  const [searchParams] = useSearchParams();
+  const [listing, setListing] = useState<Listing>();
+  const mode = searchParams.get("mode");
+  const id = searchParams.get("id");
+  const navigate = useNavigate();
+
+  const [models, setModels] = useState([]);
+
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     resetField,
+    reset,
     formState: { errors },
   } = useForm<ListingFormInput>({ resolver: yupResolver(validation) });
-
-  const navigate = useNavigate();
-
   const selectedBrand = watch("brand");
-  const [models, setModels] = useState([]);
+  const isEditMode = mode === "edit";
 
-  const handleCreateListing = async (form: ListingFormInput) => {
+  const handleCreateOrUpdateListing = async (form: ListingFormInput) => {
     const formData = new FormData();
 
     Object.entries(form).forEach(([key, value]) => {
@@ -235,11 +241,20 @@ const AddListingPage = (props: Props) => {
     }
 
     try {
-      await createListing(formData);
-      toast.success("Listing Created Successfull!");
+      if (isEditMode) {
+        // Update the listing if in edit mode
+        if (!id) throw new Error("Listing ID is required for update");
+        console.log("form Data", formData.values());
+        await updateListing(id, formData); // Call your update API
+        toast.success("Listing updated successfully!");
+      } else {
+        // Create a new listing if not in edit mode
+        await createListing(formData);
+        toast.success("Listing created successfully!");
+      }
       navigate("/profile");
     } catch (error) {
-      toast.error("Failed to create listing!");
+      toast.error("Failed to process the request.");
     }
   };
 
@@ -251,10 +266,30 @@ const AddListingPage = (props: Props) => {
     }
   }, [selectedBrand, resetField]);
 
+  useEffect(() => {
+    const fetchListing = async () => {
+      if (isEditMode && id) {
+        try {
+          const data = await getListingById(id);
+          setListing(data);
+          // Set form data after fetching listing
+          reset(data);
+        } catch (err) {
+          console.error("Failed to fetch listing", err);
+        }
+      }
+    };
+
+    fetchListing();
+  }, [id, mode, reset]);
+
   return (
     <div className="wrapper">
       <h2 className="title">Add New Listing</h2>
-      <form className="form" onSubmit={handleSubmit(handleCreateListing)}>
+      <form
+        className="form"
+        onSubmit={handleSubmit(handleCreateOrUpdateListing)}
+      >
         <div>
           <h2 className="car-detail">Car Details:</h2>
           <div className="addListing-grid">
@@ -434,35 +469,41 @@ const AddListingPage = (props: Props) => {
               {errors.color && <p className="error">{errors.color.message}</p>}
             </div>
             <div>
-              <label className="addListing-label" htmlFor="text">
+              <label className="addListing-label" htmlFor="description">
                 <TbFileDescription />
                 Description
               </label>
-              <input
+              <textarea
                 className="Listing-input"
-                type="text"
                 id="description"
                 placeholder="Description"
+                rows={5} // <-- controls the height
                 {...register("description")}
               />
               {errors.description && (
                 <p className="error">{errors.description.message}</p>
               )}
             </div>
-            <button className="post-button" type="submit">
-              Post Listing
-            </button>
           </div>
           <hr></hr>
-          <input
-            type="file"
-            id="imageFiles"
-            multiple
-            accept="image/*"
-            {...register("imageFiles")}
+          <UploadImages
+            onImagesChange={(files) =>
+              setValue("imageFiles", files, { shouldValidate: true })
+            }
+            defaultImageUrls={listing?.images}
           />
           {errors.imageFiles && (
             <p className="error">{errors.imageFiles.message}</p>
+          )}
+          <hr></hr>
+          {isEditMode ? (
+            <button className="post-button" type="submit">
+              Update Listing
+            </button>
+          ) : (
+            <button className="post-button" type="submit">
+              Post Listing
+            </button>
           )}
         </div>
       </form>

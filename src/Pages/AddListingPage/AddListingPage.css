@@ -57,6 +57,7 @@
   border-radius: 0.5rem;
   background-color: #f9fafb;
   color: #111827;
+  resize: none;
 }
 
 .dark input {
@@ -78,15 +79,13 @@ input:focus {
 }
 
 .post-button {
-  width: 90%;
+  width: 35%;
   height: 50px;
   font-weight: 700;
   border: none;
   background-color: #16a34a;
   color: white;
   border-radius: 8px;
-  margin-top: 18px;
-  margin-left: 21px;
 }
 
 .custom-select {
