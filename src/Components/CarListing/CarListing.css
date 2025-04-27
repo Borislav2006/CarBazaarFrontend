@@ -2,7 +2,9 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(280px, 1fr));
   gap: 1.5rem;
-  padding: 2rem;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-bottom: 32px;
 }
 
 .pagination {

@@ -40,7 +40,7 @@ export const carOptions = {
     "GLE",
     "G-Class",
   ],
-  Audi: ["A3", "A4", "A6", "A8", "Q3", "Q5", "Q7", "TT"],
+  Audi: ["A3", "A4", "A5", "A6", "A8", "Q3", "Q5", "Q7", "TT"],
   Volkswagen: [
     "Golf",
     "Polo",

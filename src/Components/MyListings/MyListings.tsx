@@ -60,7 +60,7 @@ const MyListings = ({ filters }: CarListingProps) => {
   }, [filters]);
 
   return (
-    <div className="car-listing-grid">
+    <div className="my-listing-grid">
       {userListings.map((listing, index) => (
         <div key={index}>
           <CarItem

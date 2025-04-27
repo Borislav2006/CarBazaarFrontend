@@ -112,7 +112,7 @@ const AddListingPage = (props: Props) => {
       if (isEditMode) {
         if (!id) throw new Error("Listing ID is required for update");
         console.log("form Data", formData.values());
-        await updateListing(id, formData); 
+        await updateListing(id, formData);
         toast.success("Listing updated successfully!");
       } else {
         await createListing(formData);
@@ -150,7 +150,11 @@ const AddListingPage = (props: Props) => {
 
   return (
     <div className="wrapper">
-      <h2 className="title">Add New Listing</h2>
+      {isEditMode ? (
+        <h2 className="title">Edit Listing</h2>
+      ) : (
+        <h2 className="title">Add New Listing</h2>
+      )}
       <form
         className="form"
         onSubmit={handleSubmit(handleCreateOrUpdateListing)}
@@ -341,10 +345,10 @@ const AddListingPage = (props: Props) => {
                 Description
               </label>
               <textarea
-                className="Listing-input"
+                className="Listing-description"
                 id="description"
                 placeholder="Description"
-                rows={5}
+                rows={10}
                 {...register("description")}
               />
               {errors.description && (
