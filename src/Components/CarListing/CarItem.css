@@ -69,3 +69,7 @@
 .link-details {
   text-decoration: none;
 }
+
+.published {
+  padding-left: 8px;
+}

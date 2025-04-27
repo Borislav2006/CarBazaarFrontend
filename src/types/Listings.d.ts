@@ -8,6 +8,13 @@ export interface UserSummary {
   firstName: string;
   lastName: string;
   email: string;
+  phoneNumber: string;
+}
+
+export interface PaginatedResult {
+  items: Listing[];
+  totalCount: number;
+  totalPages: number;
 }
 
 export interface Listing {
@@ -20,6 +27,7 @@ export interface Listing {
   milage: number;
   price: number;
   engineType: string;
+  fuelType: string;
   horsePower: number;
   gearBox: string;
   color: string;
@@ -38,6 +46,7 @@ export interface CreateListing {
   milage: number;
   price: number;
   engineType: string;
+  fuelType: string;
   horsePower: number;
   gearBox: string;
   color: string;
@@ -48,10 +57,11 @@ export interface QueryObject {
   brand?: string;
   model?: string;
   engineType?: string;
+  fuelType?: string;
   gearBox?: string;
   color?: string;
   sortBy?: string;
-  isDecsending?: boolean;
+  isDescending?: boolean;
   pageNumber?: number;
   pageSize?: number;
 }

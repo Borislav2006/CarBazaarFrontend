@@ -1,16 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import Hero from "../../Components/Hero/Hero";
 import CarListing from "../../Components/CarListing/CarListing";
+import FilterSection from "../../Components/FilterSection/FilterSection";
+import { QueryObject } from "../../types/Listings";
 
-interface Props {}
+const HomePage = () => {
+  const [filters, setFilters] = useState<QueryObject>({
+    pageNumber: 1,
+    pageSize: 10,
+  });
 
-const HomePage = (props: Props) => {
   return (
     <>
       <Hero />
-      <CarListing />
+      <FilterSection filters={filters} setFilters={setFilters} />
+      <CarListing filters={filters} />
     </>
   );
 };
+
 
 export default HomePage;

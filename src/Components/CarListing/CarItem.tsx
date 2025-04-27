@@ -21,11 +21,19 @@ type Props = {
   createdAt: string;
 };
 
-const CarItem = ({ imagePath, price, gearBox, fuelType, year, id, title, createdAt }: Props) => {
+const CarItem = ({
+  imagePath,
+  price,
+  gearBox,
+  fuelType,
+  year,
+  id,
+  title,
+  createdAt,
+}: Props) => {
   const imageUrl = `https://localhost:5001/images/${imagePath}`;
   return (
     <div className="card">
-      {/* <h2>Published: {formatDate(createdAt)}</h2> */}
       <img className="image" src={imageUrl} />
       <div>
         <h2 className="brand">{title}</h2>
@@ -62,6 +70,8 @@ const CarItem = ({ imagePath, price, gearBox, fuelType, year, id, title, created
           </div>
         </div>
       </div>
+      <hr></hr>
+      <h3 className="published">Published: {formatDate(createdAt)}</h3>
     </div>
   );
 };

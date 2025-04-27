@@ -86,7 +86,7 @@
 
 .navbar-buttons {
   display: flex;
-  gap: 1.5rem; /* space between the buttons */
+  gap: 1.5rem; 
   align-items: center;
   text-decoration: none;
 }

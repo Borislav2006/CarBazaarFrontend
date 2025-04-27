@@ -7,6 +7,7 @@ import ImageGallery from "../Components/ImageGallery/ImageGallery";
 import { FaEuroSign } from "react-icons/fa";
 import CarSpecification from "../Components/CarSpecification/CarSpecification";
 import OwnersDetails from "../Components/OwnersDetails/OwnersDetails";
+import { formatDate } from "../../../Helpers/DateFormater";
 
 type Props = {};
 
@@ -30,6 +31,12 @@ const DetailsPage = (props: Props) => {
   return (
     <div className="details-header">
       <h2 className="title">{listing?.title}</h2>
+      <p className="published-profile">
+        Published: {formatDate(listing?.createdAt)}
+      </p>
+      <p className="last-updated">
+        Last Updated: {formatDate(listing?.updatedAt)}
+      </p>
       <div className="details-container">
         <div className="image-container">
           <>

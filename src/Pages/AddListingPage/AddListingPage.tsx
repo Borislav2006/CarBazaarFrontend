@@ -9,6 +9,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { IoMdPricetag } from "react-icons/io";
 import { BsFillFuelPumpFill } from "react-icons/bs";
+import { PiEngineBold } from "react-icons/pi";
 import { SlSpeedometer } from "react-icons/sl";
 import { IoColorPaletteOutline } from "react-icons/io5";
 import { SlCalender } from "react-icons/sl";
@@ -19,6 +20,13 @@ import { FaCar } from "react-icons/fa";
 import { FaCarSide } from "react-icons/fa";
 import { BiSolidTachometer } from "react-icons/bi";
 import UploadImages from "./Components/UploadImages";
+import {
+  carOptions,
+  colorOptions,
+  engineTypeOptions,
+  fuelTypeOptions,
+  gearboxOptions,
+} from "../../Helpers/Data";
 
 type Props = {};
 
@@ -31,168 +39,12 @@ type ListingFormInput = {
   milage: number;
   price: number;
   engineType: string;
+  fuelType: string;
   horsePower: number;
   gearBox: string;
   color: string;
   imageFiles: File[];
 };
-
-const carOptions = {
-  Toyota: [
-    "Corolla",
-    "Camry",
-    "Yaris",
-    "RAV4",
-    "Highlander",
-    "Land Cruiser",
-    "Prius",
-    "Hilux",
-  ],
-  Honda: [
-    "Civic",
-    "Accord",
-    "CR-V",
-    "Pilot",
-    "Fit",
-    "HR-V",
-    "Odyssey",
-    "Insight",
-  ],
-  Ford: [
-    "Fiesta",
-    "Focus",
-    "Fusion",
-    "Escape",
-    "Explorer",
-    "F-150",
-    "Mustang",
-    "Edge",
-  ],
-  BMW: ["3 Series", "5 Series", "7 Series", "X1", "X3", "X5", "i3", "M3"],
-  Mercedes: [
-    "A-Class",
-    "C-Class",
-    "E-Class",
-    "S-Class",
-    "GLA",
-    "GLC",
-    "GLE",
-    "G-Class",
-  ],
-  Audi: ["A3", "A4", "A6", "A8", "Q3", "Q5", "Q7", "TT"],
-  Volkswagen: [
-    "Golf",
-    "Polo",
-    "Passat",
-    "Jetta",
-    "Tiguan",
-    "Touareg",
-    "Arteon",
-    "Beetle",
-  ],
-  Hyundai: [
-    "Elantra",
-    "Sonata",
-    "Tucson",
-    "Santa Fe",
-    "Kona",
-    "i30",
-    "Accent",
-    "Palisade",
-  ],
-  Kia: [
-    "Rio",
-    "Cerato",
-    "Sportage",
-    "Sorento",
-    "Soul",
-    "Seltos",
-    "Stinger",
-    "Picanto",
-  ],
-  Nissan: [
-    "Micra",
-    "Sentra",
-    "Altima",
-    "Maxima",
-    "Rogue",
-    "Murano",
-    "Pathfinder",
-    "370Z",
-  ],
-  Chevrolet: [
-    "Spark",
-    "Cruze",
-    "Malibu",
-    "Equinox",
-    "Traverse",
-    "Tahoe",
-    "Camaro",
-    "Silverado",
-  ],
-  Tesla: ["Model S", "Model 3", "Model X", "Model Y", "Roadster", "Cybertruck"],
-  Mazda: ["Mazda2", "Mazda3", "Mazda6", "CX-3", "CX-5", "CX-9", "MX-5"],
-  Subaru: [
-    "Impreza",
-    "Legacy",
-    "Forester",
-    "Outback",
-    "Crosstrek",
-    "BRZ",
-    "WRX",
-  ],
-  Volvo: ["S60", "S90", "V60", "V90", "XC40", "XC60", "XC90"],
-  Jeep: [
-    "Renegade",
-    "Compass",
-    "Cherokee",
-    "Grand Cherokee",
-    "Wrangler",
-    "Gladiator",
-  ],
-  Peugeot: ["208", "308", "508", "2008", "3008", "5008"],
-  Renault: ["Clio", "Megane", "Captur", "Kadjar", "Talisman", "ZOE"],
-  Skoda: ["Fabia", "Octavia", "Superb", "Karoq", "Kodiaq", "Scala"],
-  LandRover: [
-    "Defender",
-    "Discovery",
-    "Range Rover",
-    "Range Rover Evoque",
-    "Velar",
-  ],
-};
-
-const gearboxOptions = ["Manual", "Automatic"];
-const fuelTypeOptions = ["Petrol", "Diesel", "Electric", "Hybrid", "Gas"];
-const engineTypeOptions = [
-  "Inline-4",
-  "Inline-6",
-  "V6",
-  "V8",
-  "V10",
-  "V12",
-  "Boxer (Flat-4 / Flat-6)",
-  "Rotary (Wankel)",
-  "Electric Motor",
-  "Hybrid Engine",
-  "Turbocharged",
-  "Supercharged",
-];
-
-
-const colorOptions = [
-  "Black",
-  "White",
-  "Silver",
-  "Red",
-  "Blue",
-  "Gray",
-  "Green",
-  "Yellow",
-  "Orange",
-  "Brown",
-  "Beige",
-];
 
 const validation = Yup.object().shape({
   title: Yup.string().required("Title is required"),
@@ -209,6 +61,7 @@ const validation = Yup.object().shape({
     .typeError("Price must be a number")
     .required("Price is required"),
   engineType: Yup.string().required("Engine Type is required"),
+  fuelType: Yup.string().required("Fuel Type is required"),
   horsePower: Yup.number()
     .typeError("Horse Power must be a number")
     .required("Horse Power is required"),
@@ -257,13 +110,11 @@ const AddListingPage = (props: Props) => {
 
     try {
       if (isEditMode) {
-        // Update the listing if in edit mode
         if (!id) throw new Error("Listing ID is required for update");
         console.log("form Data", formData.values());
-        await updateListing(id, formData); // Call your update API
+        await updateListing(id, formData); 
         toast.success("Listing updated successfully!");
       } else {
-        // Create a new listing if not in edit mode
         await createListing(formData);
         toast.success("Listing created successfully!");
       }
@@ -287,7 +138,6 @@ const AddListingPage = (props: Props) => {
         try {
           const data = await getListingById(id);
           setListing(data);
-          // Set form data after fetching listing
           reset(data);
         } catch (err) {
           console.error("Failed to fetch listing", err);
@@ -391,7 +241,7 @@ const AddListingPage = (props: Props) => {
             </div>
             <div className="fuel">
               <label className="addListing-label" htmlFor="text">
-                <BsFillFuelPumpFill />
+                <PiEngineBold />
                 Engine Type
               </label>
               <select
@@ -425,25 +275,25 @@ const AddListingPage = (props: Props) => {
               />
               {errors.price && <p className="error">{errors.price.message}</p>}
             </div>
-            <div>
+            <div className="fuel">
               <label className="addListing-label" htmlFor="text">
-                <TbManualGearbox />
-                Gear Box
+                <BsFillFuelPumpFill />
+                Fuel Type
               </label>
               <select
                 className="custom-select"
-                id="gearBox"
-                {...register("gearBox")}
+                id="fuelType"
+                {...register("fuelType")}
               >
-                <option value="">Select Gearbox</option>
-                {gearboxOptions.map((gear, idx) => (
-                  <option key={idx} value={gear}>
-                    {gear}
+                <option value="">Select Fuel Type</option>
+                {fuelTypeOptions.map((fuel, idx) => (
+                  <option key={idx} value={fuel}>
+                    {fuel}
                   </option>
                 ))}
               </select>
-              {errors.gearBox && (
-                <p className="error">{errors.gearBox.message}</p>
+              {errors.engineType && (
+                <p className="error">{errors.engineType.message}</p>
               )}
             </div>
             <div>
@@ -466,6 +316,43 @@ const AddListingPage = (props: Props) => {
             </div>
             <div>
               <label className="addListing-label" htmlFor="text">
+                <TbManualGearbox />
+                Gear Box
+              </label>
+              <select
+                className="custom-select"
+                id="gearBox"
+                {...register("gearBox")}
+              >
+                <option value="">Select Gearbox</option>
+                {gearboxOptions.map((gear, idx) => (
+                  <option key={idx} value={gear}>
+                    {gear}
+                  </option>
+                ))}
+              </select>
+              {errors.gearBox && (
+                <p className="error">{errors.gearBox.message}</p>
+              )}
+            </div>
+            <div>
+              <label className="addListing-label" htmlFor="description">
+                <TbFileDescription />
+                Description
+              </label>
+              <textarea
+                className="Listing-input"
+                id="description"
+                placeholder="Description"
+                rows={5}
+                {...register("description")}
+              />
+              {errors.description && (
+                <p className="error">{errors.description.message}</p>
+              )}
+            </div>
+            <div>
+              <label className="addListing-label" htmlFor="text">
                 <IoColorPaletteOutline />
                 Color
               </label>
@@ -482,22 +369,6 @@ const AddListingPage = (props: Props) => {
                 ))}
               </select>
               {errors.color && <p className="error">{errors.color.message}</p>}
-            </div>
-            <div>
-              <label className="addListing-label" htmlFor="description">
-                <TbFileDescription />
-                Description
-              </label>
-              <textarea
-                className="Listing-input"
-                id="description"
-                placeholder="Description"
-                rows={5} // <-- controls the height
-                {...register("description")}
-              />
-              {errors.description && (
-                <p className="error">{errors.description.message}</p>
-              )}
             </div>
           </div>
           <hr></hr>

@@ -11,7 +11,7 @@
 
 .images-box:hover {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -2px rgba(0, 0, 0, 0.1); /* this is shadow-md */
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
 }
 
 .plus {
@@ -38,14 +38,12 @@
   gap: 20px;
 }
 
-/* Medium screens (>= 768px) */
 @media (min-width: 768px) {
   .images-container {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
-/* Large screens (>= 1024px) */
 @media (min-width: 1024px) {
   .images-container {
     grid-template-columns: repeat(6, minmax(0, 1fr));

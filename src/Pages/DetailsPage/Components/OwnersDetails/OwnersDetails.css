@@ -1,5 +1,5 @@
 .owner-details {
-  padding: 40px;
+  padding: 20px;
   border-width: 1px;
   border-radius: 12px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
@@ -8,14 +8,18 @@
 
 .user-name {
   margin-top: 8px;
-  font-weight: 700;
   font-size: 20px;
   line-height: 20px;
 }
 
 .user-email {
   margin-top: 8px;
-  font-weight: 700;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.user-phone {
+  margin-top: 8px;
   font-size: 20px;
   line-height: 20px;
 }

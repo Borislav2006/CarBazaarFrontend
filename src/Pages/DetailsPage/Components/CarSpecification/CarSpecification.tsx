@@ -9,6 +9,7 @@ import { TbManualGearbox } from "react-icons/tb";
 import { BsFillFuelPumpFill } from "react-icons/bs";
 import { SlSpeedometer } from "react-icons/sl";
 import { IoColorPaletteOutline } from "react-icons/io5";
+import { PiEngineBold } from "react-icons/pi";
 
 type Props = {
   listing?: Listing;
@@ -19,64 +20,71 @@ const CarSpecification = ({ listing }: Props) => {
     <div className="specification-container">
       <h2 className="specifications-header">Specifications</h2>
       <div className="specification-item">
-        <h2 className="specification">
+        <h3 className="specification">
           <FaCar />
           Brand
-        </h2>
-        <h2>{listing?.brand}</h2>
+        </h3>
+        <h3>{listing?.brand}</h3>
       </div>
       <div className="specification-item">
-        <h2 className="specification">
+        <h3 className="specification">
           <FaCarSide />
           Model
-        </h2>
-        <h2>{listing?.model}</h2>
+        </h3>
+        <h3>{listing?.model}</h3>
       </div>
       <div className="specification-item">
-        <h2 className="specification">
+        <h3 className="specification">
           <SlCalender />
           Year
-        </h2>
-        <h2>{listing?.year}</h2>
+        </h3>
+        <h3>{listing?.year}</h3>
       </div>
       <div className="specification-item">
-        <h2 className="specification">
+        <h3 className="specification">
           <IoColorPaletteOutline />
           Color
-        </h2>
-        <h2>{listing?.color}</h2>
+        </h3>
+        <h3>{listing?.color}</h3>
       </div>
       <div className="specification-item">
-        <h2 className="specification">
-          <BsFillFuelPumpFill />
+        <h3 className="specification">
+          <PiEngineBold />
           Engine Type
-        </h2>
-        <h2>{listing?.engineType}</h2>
+        </h3>
+        <h3>{listing?.engineType}</h3>
       </div>
       <div className="specification-item">
-        <h2 className="specification">
+        <h3 className="specification">
+          <BsFillFuelPumpFill />
+          Fuel Type
+        </h3>
+        <h3>{listing?.fuelType}</h3>
+      </div>
+      <div className="specification-item">
+        <h3 className="specification">
           {listing?.gearBox === "Automatic" ? (
             <TbAutomaticGearbox />
           ) : (
             <TbManualGearbox />
           )}
           Gear Box
-        </h2>
-        <h2>{listing?.gearBox}</h2>
+        </h3>
+        <h3>{listing?.gearBox}</h3>
       </div>
       <div className="specification-item">
-        <h2 className="specification">
+        <h3 className="specification">
           <SlSpeedometer />
           Horse Power
-        </h2>
-        <h2>{listing?.horsePower}</h2>
+        </h3>
+        <h3>{listing?.horsePower}</h3>
       </div>
       <div className="specification-item">
-        <h2 className="specification">
+        <h3 className="specification">
           <FaCar />
           Mileage
-        </h2>
-        <h2>{listing?.milage}</h2>
+        </h3>
+        <h3>{listing?.milage}</h3>
       </div>
     </div>
   );

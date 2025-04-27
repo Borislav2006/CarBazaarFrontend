@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "./MyListings.css";
 import { deleteListing, getUserListings } from "../../api/api";
-import { Listing } from "../../types/Listings";
+import { Listing, QueryObject } from "../../types/Listings";
 import CarListing from "../CarListing/CarListing";
 import CarItem from "../CarListing/CarItem";
 import { FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-type Props = {};
+interface CarListingProps {
+  filters: QueryObject;
+}
 
-const MyListings = (props: Props) => {
+const MyListings = ({ filters }: CarListingProps) => {
   const [userListings, setUserListings] = useState<Listing[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedListingId, setSelectedListingId] = useState<number | null>(
@@ -30,8 +32,24 @@ const MyListings = (props: Props) => {
 
   useEffect(() => {
     const fetchUserListings = async () => {
+      let sortField;
+      let isDescending;
+
+      if (filters.sortBy) {
+        const [field, direction] = filters.sortBy.split("-");
+        sortField = field;
+        isDescending = direction === "desc";
+      }
+
+      const query: QueryObject = {
+        sortBy: sortField,
+        isDescending: isDescending,
+        pageNumber: filters.pageNumber ?? 1,
+        pageSize: filters.pageSize ?? 10,
+      };
+
       try {
-        const data = await getUserListings();
+        const data = await getUserListings(query);
         setUserListings(data);
       } catch (err) {
         console.error("Failed to fetch user listings", err);
@@ -39,7 +57,7 @@ const MyListings = (props: Props) => {
     };
 
     fetchUserListings();
-  }, []);
+  }, [filters]);
 
   return (
     <div className="car-listing-grid">
@@ -51,7 +69,7 @@ const MyListings = (props: Props) => {
             imagePath={listing.images[0].imagePath}
             price={listing.price}
             gearBox={listing.gearBox}
-            fuelType={listing.engineType}
+            fuelType={listing.fuelType}
             year={listing.year}
             title={listing.title}
             createdAt={listing.createdAt}

@@ -40,14 +40,14 @@ const UploadImages = ({ onImagesChange, defaultImageUrls = [] }: Props) => {
     <div>
       <h2 className="upload-title">Upload Images</h2>
       <div className="images-container">
-        {/* Render existing images without delete button */}
         {existingImages.map((image, index) => (
           <div key={`existing-${index}`}>
-            <img src={`https://localhost:5001/images/${image.imagePath}`} className="images-upload" />
+            <img
+              src={`https://localhost:5001/images/${image.imagePath}`}
+              className="images-upload"
+            />
           </div>
         ))}
-
-        {/* Render new uploaded images with delete button */}
         {uploadedFiles.map((file, index) => (
           <div key={`uploaded-${index}`}>
             <IoMdCloseCircle
@@ -57,8 +57,6 @@ const UploadImages = ({ onImagesChange, defaultImageUrls = [] }: Props) => {
             <img src={URL.createObjectURL(file)} className="images-upload" />
           </div>
         ))}
-
-        {/* Upload input */}
         <label>
           <div className="images-box">
             <h2 className="plus">+</h2>

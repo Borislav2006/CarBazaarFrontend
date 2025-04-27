@@ -1,0 +1,18 @@
+.filter-section {
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 8px;
+  margin-left: 15px;
+}
+
+.filter-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filter-controls select {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}

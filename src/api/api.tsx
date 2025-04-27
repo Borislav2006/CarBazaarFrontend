@@ -1,9 +1,9 @@
 import axios from "axios";
-import { CreateListing, Listing, QueryObject } from "../types/Listings";
+import { CreateListing, Listing, PaginatedResult, QueryObject } from "../types/Listings";
 
 const API_URL = `${import.meta.env.VITE_BASE_URL}/api/listing`;
 
-export const getListings = async (query?: QueryObject): Promise<Listing[]> => {
+export const getListings = async (query?: QueryObject): Promise<PaginatedResult> => {
   const params = new URLSearchParams();
 
   if (query) {
@@ -14,7 +14,7 @@ export const getListings = async (query?: QueryObject): Promise<Listing[]> => {
     });
   }
 
-  const response = await axios.get<Listing[]>(
+  const response = await axios.get<PaginatedResult>(
     `${API_URL}?${params.toString()}`
   );
   return response.data;
@@ -25,8 +25,18 @@ export const getListingById = async (id: string): Promise<Listing> => {
   return response.data;
 };
 
-export const getUserListings = async (): Promise<Listing[]> => {
-  const response = await axios.get<Listing[]>(`${API_URL}/user`);
+export const getUserListings = async (query?: QueryObject): Promise<Listing[]> => {
+  const params = new URLSearchParams();
+
+  if (query) {
+    Object.entries(query).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        params.append(key, value.toString());
+      }
+    });
+  }
+
+  const response = await axios.get<Listing[]>(`${API_URL}/user?${params.toString()}`);
   return response.data;
 };
 
